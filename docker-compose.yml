@@ -1,0 +1,40 @@
+version: '3'
+services:
+
+  php:
+    image: php:8.3-fpm
+    restart: always
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    volumes:
+      - '.:/var/www/html'
+      - './docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
+    links:
+      - db
+    env_file:
+      - .env
+
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - '8080:80'
+    volumes:
+      - '.:/var/www/html'
+      - './docker/nginx/conf.d:/etc/nginx/conf.d'
+    links:
+      - php
+
+  db:
+      image: postgres:14.10
+      restart: always
+      environment:
+          - POSTGRES_HOST=${DB_HOST}
+          - POSTGRES_DB=${DB_DATABASE}
+          - POSTGRES_USER=${DB_USERNAME}
+          - POSTGRES_PASSWORD=${DB_PASSWORD}
+          - POSTGRES_CONNECTION=${DB_CONNECTION}
+      ports:
+          - "5432:5432"
