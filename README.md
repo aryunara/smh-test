@@ -1,10 +1,45 @@
 Тестовое задание для компании SocialMediaHolding
 
-I. Для того, чтобы добавить iPhone на сервер dummyJSON, следует использовать Postman:
+I. Для того, чтобы подготовить проект к работе:
 
-1) Поставить POST-запрос.
-2) Поставить роут 0.0.0.0:8080/addIPhone.
-3) В body поставить raw и вписать любые данные, например:
+1) Отредактируйте файл .env.example и переименуйте его в .env:
+
+DB_CONNECTION=pgsql
+DB_HOST=db
+DB_PORT=5432
+DB_DATABASE=db
+DB_USERNAME=user
+DB_PASSWORD=user
+
+2) Установите пакеты:
+
+composer install
+
+3) Сбилдите контейнеры:
+
+docker compose build
+
+4) Поднимите контейнеры:
+
+docker compose up -d
+
+5) Подключитесь к базе данных, используя данные из .env файла.
+
+6) Войдите в bash:
+
+docker compose exec php bash
+
+7) Выполните миграции:
+
+php artisan migrate
+
+II. Для того, чтобы добавить iPhone на сервер dummyJSON, следует использовать Postman:
+
+1) Поставьте POST-запрос.
+
+2) Поставьте роут 0.0.0.0:8080/addIPhone.
+
+3) В body raw впишите данные, например:
    {
    "title": "IPhone 8",
    "description": "8th model",
@@ -21,10 +56,13 @@ I. Для того, чтобы добавить iPhone на сервер dummyJS
    ],
    "thumbnail":"https://cdn.dummyjson.com/products/images/smartphones/iPhone%208s/thumbnail.png"
    }
-4) Отправить (send).
 
-II. Для того, чтобы получить все продукты iPhone и сохранить их в базу данных, следует также использовать Postman.
+4) Отправьте запрос (send).
 
-1) Поставить GET-запрос.
-2) Поставить роут 0.0.0.0:8080/getIPhones.
-3) Отправить (send).
+III. Для того, чтобы получить все продукты iPhone и сохранить их в базу данных, следует также использовать Postman.
+
+1) Поставьте GET-запрос.
+
+2) Поставьте роут 0.0.0.0:8080/getIPhones.
+
+3) Отправьте запрос (send).
